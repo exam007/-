@@ -1,0 +1,938 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>แบบทดสอบ ภาค ก. ท้องถิ่น กฎหมาย 200 ข้อ</title>
+    <!-- Inter Font สำหรับ Typography ที่ทันสมัยและสะอาดตา -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Tailwind CSS CDN (สำหรับ utility และ modal, แต่ส่วนใหญ่เป็น custom CSS) -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        :root {
+            /* สีและขนาดสำหรับสไตล์ Soft UI / Neumorphism */
+            --bg-color: #e0e5ec; /* พื้นหลังโดยรวมที่นุ่มนวล */
+            --card-bg: #ffffff; /* สีพื้นหลังของ Card */
+            --text-primary: #333; /* สีข้อความหลักที่เข้มขึ้นเล็กน้อย */
+            --text-secondary: #6b6b6b; /* สีข้อความรอง */
+            
+            /* Shadows สำหรับองค์ประกอบ Soft UI (ยังคงอยู่สำหรับกล่องหลักและ option) */
+            --neumorphic-light-shadow: #ffffff; /* เงาสว่างสำหรับด้านบน/ซ้าย */
+            --neumorphic-dark-shadow: #a7a9af; /* เงาเข้มสำหรับด้านล่าง/ขวา */
+
+            --accent-blue: #007aff; /* สีฟ้า iOS */
+            --accent-red: #ff3b30; /* สีแดง iOS */
+            --accent-green: #34c759; /* สีเขียว iOS */
+
+            --card-radius: 24px; /* ขอบโค้งของ Card ที่กลมขึ้น */
+            --element-radius: 16px; /* ขอบโค้งสำหรับ option */
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg-color); /* ใช้พื้นหลัง Soft UI */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            margin: 0;
+            padding: 20px;
+            color: var(--text-primary);
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+        }
+
+        .container {
+            background: var(--card-bg);
+            border-radius: var(--card-radius);
+            padding: 40px; /* เพิ่ม padding ให้ดูโปร่งขึ้น */
+            max-width: 500px; /* ขนาดสูงสุดของกล่องหลัก (ใกล้เคียง A4 ในแนวตั้งบนเดสก์ท็อป) */
+            width: 100%;
+            /* เงา Soft UI สำหรับ Card หลัก */
+            box-shadow: 10px 10px 30px var(--neumorphic-dark-shadow), /* เงาด้านขวา-ล่าง */
+                        -10px -10px 30px var(--neumorphic-light-shadow); /* เงาด้านซ้าย-บน (light) */
+            position: relative;
+            overflow: hidden;
+            border: none; /* ไม่มีขอบแข็ง */
+        }
+
+        .app-title {
+            text-align: center;
+            font-size: 1.6rem; /* ขนาดใหญ่ขึ้นเล็กน้อย */
+            font-weight: 600;
+            color: var(--text-secondary);
+            margin-bottom: 20px; /* ระยะห่างด้านล่าง */
+        }
+
+        h1, h2 {
+            text-align: center;
+            margin-bottom: 35px;
+            font-weight: 700;
+            font-size: 2.2rem; /* ขนาดใหญ่ขึ้น */
+            color: var(--text-primary);
+        }
+
+        h4 {
+            text-align: left;
+            margin-bottom: 28px;
+            font-weight: 600;
+            font-size: 1.3rem;
+            line-height: 1.6;
+            color: var(--text-primary);
+        }
+
+        .form-group {
+            margin-bottom: 50px;
+        }
+
+        /* Input field style (ชื่อผู้ใช้งาน) */
+        input {
+            width: 100%;
+            padding: 20px 30px; /* ปรับ padding ให้ดูสูงขึ้นและโค้งมน */
+            border-radius: 9999px; /* ทำให้โค้งมนเป็นรูปแคปซูล */
+            font-size: 30rem; /* เพิ่มขนาด font */
+            border: 1px solid #ccc; /* เพิ่มขอบบางๆ */
+            background: white; /* สีพื้นหลังขาว */
+            color: var(--text-primary);
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05); /* เงาอ่อนๆ ด้านนอก */
+            transition: all 0.3s ease;
+            text-align: center; /* จัดข้อความ placeholder ให้อยู่ตรงกลาง */
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent-blue); /* สีขอบเมื่อ focus */
+            box-shadow: 0 0 0 3px rgba(0, 122, 255, 0.2); /* เงาเรืองแสงเมื่อ focus */
+        }
+
+        input::placeholder {
+            text-align: center;
+            font-weight: 500;
+            color: #999;
+        }
+
+        .button-group {
+            display: flex;
+            gap: 30px;
+            margin-top: 35px;
+            width: 100%;
+            flex-wrap: wrap;
+            justify-content: space-between; /* จัดให้ปุ่มอยู่คนละฝั่ง */
+        }
+
+        .button-group button {
+            width: auto; /* ให้ความกว้างปรับตามเนื้อหา */
+            min-width:120px; /* กำหนดความกว้างขั้นต่ำ */
+            flex-grow: 1; /* ให้ปุ่มขยายตัวได้ */
+            margin-top: 0;
+        }
+
+        /* สไตล์ปุ่มหลักทั้งหมด (รวมถึงปุ่มล็อกอิน, ถัดไป, ย้อนกลับ, ทำใหม่, ยกเลิกใน Modal) */
+        button {
+            padding: 30px 50px; /* ปรับ padding ให้ดูสั้นลงและเท่ากับปุ่ม login */
+            border-radius: 9999px; /* ทำให้โค้งมนเป็นรูปแคปซูล */
+            font-size:30rem; /* ปรับขนาด font ให้เท่ากับปุ่ม login */
+            border: none;
+            background: linear-gradient(to right, #67bdfc, #4facfe); /* สีฟ้า gradient */
+            color: white; /* สีข้อความขาว */
+            font-weight: 600;
+            cursor: pointer;
+            /* เงาใหม่ */
+            box-shadow: 0 4px 14px rgba(79, 172, 254, 0.4); /* เงาสำหรับ gradient */
+            transition: all 0.3s ease;
+            -webkit-appearance: none;
+        }
+
+        button:hover:not(:disabled) {
+            opacity: 0.95;
+            box-shadow: 0 6px 18px rgba(79, 172, 254, 0.5);
+            background: linear-gradient(to right, #56a7eb, #3a97e6); /* gradient เข้มขึ้นเล็กน้อยเมื่อ hover */
+            transform: translateY(-2px); /* ยกตัวขึ้นเล็กน้อย */
+        }
+
+        button:active:not(:disabled) {
+            transform: translateY(0);
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.4);
+            background: linear-gradient(to right, #4596d0, #2f7ecb); /* gradient เข้มขึ้นเมื่อ active */
+        }
+
+        button:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none; /* ไม่มีเงาเมื่อ disabled */
+            background: linear-gradient(to right, #a7a9af, #c0c2c7); /* สีเทาอ่อน gradient เมื่อ disabled */
+        }
+        
+        /* ปุ่มล็อกอิน: จัดกึ่งกลางและมีขนาดที่เหมาะสม (ใช้สไตล์ปุ่มทั่วไป) */
+        #loginBox button { 
+            display: block;
+            width:150px; /* ให้ความกว้างปรับตามเนื้อหา */
+            min-width: 200px; /* กำหนดความกว้างขั้นต่ำ */
+            max-width: 280px; /* กำหนดความกว้างสูงสุด */
+            margin: 40px auto 0; /* จัดกึ่งกลางแนวนอน */
+        }
+
+        /* ปุ่ม "ส่งคำตอบ" ใน Modal (สีแดง) */
+        #confirmSubmit {
+            background: var(--accent-red); /* สีแดง */
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.35);
+        }
+        #confirmSubmit:hover {
+            background-color: #cc2b22;
+            box-shadow: 0 6px 15px rgba(255, 59, 48, 0.45);
+        }
+        #confirmSubmit:active {
+            background-color: #b2251d;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        /* ปุ่มปิด (X) */
+        #closeButton {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            background: #eee; /* สีพื้นหลังเทาอ่อน */
+            border-radius: 50%; /* ยังคงเป็นวงกลม */
+            width: 48px; /* ขนาดใหญ่ขึ้น */
+            height: 48px; /* ขนาดใหญ่ขึ้น */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem; /* ขนาด X ใหญ่ขึ้น */
+            color: #333; /* สีข้อความดำ */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* เงาใหม่ */
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #closeButton:hover {
+            background-color: #ddd;
+            color: #111;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        #closeButton:active {
+            background-color: #ccc;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+            transform: translateY(1px);
+        }
+
+        .option {
+            background: var(--bg-color); /* ใช้สีพื้นหลังสำหรับตัวเลือก */
+            padding: 20px 28px;
+            margin: 16px 0;
+            border-radius: var(--element-radius);
+            border: none; /* ไม่มีขอบ */
+            cursor: pointer;
+            /* เงาแบบยกตัวขึ้นเล็กน้อย */
+            box-shadow: 3px 3px 6px var(--neumorphic-dark-shadow), 
+                        -3px -3px 6px var(--neumorphic-light-shadow);
+            transition: all 0.3s ease;
+            user-select: none;
+            color: var(--text-primary);
+            line-height: 1.5;
+            font-size: 1.1rem;
+            font-weight: 500;
+        }
+
+        .option:hover {
+            box-shadow: 5px 5px 10px var(--neumorphic-dark-shadow), 
+                        -5px -5px 10px var(--neumorphic-light-shadow);
+            transform: translateY(-2px);
+            background-color: #ebf0f5; /* สีอ่อนลงเล็กน้อยเมื่อ hover */
+            border: none;
+        }
+
+        .option.selected {
+            background: var(--accent-blue);
+            color: white;
+            /* เงาแบบกดจมลงเมื่อเลือก */
+            box-shadow: inset 4px 4px 8px rgba(0, 0, 0, 0.3), 
+                        inset -4px -4px 8px rgba(255, 255, 255, 0.2);
+            transform: none; /* ไม่มี lift เมื่อเลือก */
+            border: none;
+        }
+
+        .message {
+            text-align: center;
+            padding: 20px;
+            border-radius: var(--element-radius);
+            margin: 22px 0;
+            font-weight: 500;
+            border: none; /* ไม่มีขอบ */
+            box-shadow: 0 2px 12px rgba(0, 0, 0, 0.08); /* เงาปกติสำหรับ message */
+        }
+
+        .message.error {
+            background: #fff0f0;
+            color: var(--accent-red);
+        }
+
+        .message.success {
+            background: #f0fff0;
+            color: var(--accent-green);
+        }
+
+        .question-box, .result-box {
+            display: none;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 10px;
+            background: var(--neumorphic-dark-shadow); /* ใช้สีเข้มของ neumorphism */
+            border-radius: 5px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            box-shadow: inset 2px 2px 5px rgba(0, 0, 0, 0.2); /* เงา inset ให้ดูจมลง */
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent-blue);
+            border-radius: 5px;
+            transition: width 0.3s ease;
+            box-shadow: 0 0 10px rgba(0, 122, 255, 0.45);
+        }
+
+        .question-counter {
+            text-align: center;
+            margin-bottom: 25px;
+            color: var(--text-secondary);
+            font-size: 1.05rem;
+            font-weight: 500;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 50px 20px;
+            color: var(--text-secondary);
+            font-size: 1.2rem;
+        }
+
+        .spinner {
+            border: 5px solid rgba(0, 122, 255, 0.2);
+            border-radius: 50%;
+            border-top: 5px solid var(--accent-blue);
+            width: 50px;
+            height: 50px;
+            animation: spin 1s linear infinite;
+            margin: 0 auto 30px;
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Styles สำหรับส่วนสรุปคำตอบ */
+        .answer-review {
+            margin-top: 40px;
+            border-top: 1px dashed rgba(0,0,0,0.1); /* เส้นประแบ่งส่วน */
+            padding-top: 30px;
+        }
+
+        .answer-review h3 {
+            text-align: center;
+            margin-bottom: 30px;
+            font-weight: 700;
+            color: var(--text-primary);
+            font-size: 1.7rem;
+        }
+
+        .answer-item {
+            background: var(--card-bg);
+            border-radius: var(--element-radius);
+            padding: 25px;
+            margin-bottom: 22px;
+            box-shadow: 6px 6px 12px var(--neumorphic-dark-shadow), 
+                        -6px -6px 12px var(--neumorphic-light-shadow); /* เงา Soft UI */
+            border: none; /* ไม่มีขอบ */
+            transition: all 0.2s ease;
+        }
+
+        .answer-item.correct-border {
+            border-color: var(--accent-green); /* ใช้ border-color สำหรับสถานะ */
+            box-shadow: 0 0 0 4px rgba(52, 199, 89, 0.25), 6px 6px 12px var(--neumorphic-dark-shadow);
+        }
+
+        .answer-item.incorrect-border {
+            border-color: var(--accent-red); /* ใช้ border-color สำหรับสถานะ */
+            box-shadow: 0 0 0 4px rgba(255, 59, 48, 0.25), 6px 6px 12px var(--neumorphic-dark-shadow);
+        }
+
+        .answer-item p {
+            margin-bottom: 10px;
+            line-height: 1.6;
+        }
+
+        .answer-item strong {
+            color: var(--text-primary);
+        }
+
+        .answer-item .question-text {
+            font-weight: 600;
+            margin-bottom: 15px;
+            color: var(--text-primary);
+            font-size: 1.2rem;
+        }
+
+        .answer-item .user-answer {
+            color: var(--accent-red);
+            font-weight: 500;
+        }
+        
+        .answer-item .user-answer.correct {
+            color: var(--accent-green);
+        }
+
+        .answer-item .correct-answer {
+            color: var(--accent-blue);
+            font-weight: 500;
+        }
+        
+        .answer-item .explanation {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px dashed var(--neumorphic-dark-shadow); /* เส้นประ */
+            font-size: 1em;
+            color: var(--text-secondary);
+        }
+
+        /* Custom Confirmation Modal (กล่องโต้ตอบยืนยัน) */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.65);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+        }
+        .modal-content {
+            background: var(--card-bg);
+            padding: 2.8rem;
+            border-radius: var(--card-radius);
+            box-shadow: 0 18px 60px rgba(0, 0, 0, 0.35);
+            text-align: center;
+            max-width: 420px;
+            width: 90%;
+            color: var(--text-primary);
+            border: none; /* ไม่มีขอบ */
+        }
+        .modal-content button {
+            width: auto;
+            flex-grow: 0;
+            margin: 0 15px;
+            padding: 16px 30px;
+            border-radius: 9999px; /* ทำให้โค้งมนเป็นรูปแคปซูล */
+            font-weight: 600;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.4); /* เงาใหม่ */
+            transform: none; /* ไม่มี lift เริ่มต้นสำหรับปุ่มในโมดอล */
+        }
+        
+        #confirmSubmit {
+            background: var(--accent-red); /* สีแดง */
+            color: white;
+            box-shadow: 0 4px 10px rgba(255, 59, 48, 0.35);
+        }
+        #confirmSubmit:hover {
+            background-color: #cc2b22;
+            box-shadow: 0 6px 15px rgba(255, 59, 48, 0.45);
+        }
+        #confirmSubmit:active {
+            background-color: #b2251d;
+            box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.6);
+        }
+
+        /* ปุ่มปิด (X) */
+        #closeButton {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            background: #eee; /* สีพื้นหลังเทาอ่อน */
+            border-radius: 50%; /* ยังคงเป็นวงกลม */
+            width: 48px; /* ขนาดใหญ่ขึ้น */
+            height: 48px; /* ขนาดใหญ่ขึ้น */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 2.2rem; /* ขนาด X ใหญ่ขึ้น */
+            color: #333; /* สีข้อความดำ */
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2); /* เงาใหม่ */
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            padding: 0;
+            line-height: 1;
+        }
+
+        #closeButton:hover {
+            background-color: #ddd;
+            color: #111;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+        }
+        #closeButton:active {
+            background-color: #ccc;
+            box-shadow: inset 0 1px 4px rgba(0, 0, 0, 0.4);
+            transform: translateY(1px);
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 30px 25px;
+                margin: 15px;
+                border-radius: 20px;
+            }
+            
+            .app-title {
+                font-size: 1.4rem;
+                margin-bottom: 15px;
+            }
+
+            h2 {
+                font-size: 2rem;
+                margin-bottom: 30px;
+            }
+            h4 {
+                font-size: 1.15rem;
+                margin-bottom: 22px;
+            }
+
+            label {
+                font-size: 1rem;
+                margin-bottom: 10px;
+            }
+
+            input {
+                padding: 15px 20px;
+                font-size: 1.1rem;
+                border-radius: 9999px; /* ยังคงเป็นแคปซูลบนมือถือ */
+            }
+            
+            button {
+                padding: 15px 25px;
+                font-size: 1.2rem;
+                border-radius: 9999px; /* ยังคงเป็นแคปซูลบนมือถือ */
+            }
+            
+            #loginBox button { /* ใช้ selector นี้สำหรับปุ่มล็อกอิน */
+                margin-top: 30px;
+            }
+
+            .option {
+                padding: 16px 22px;
+                font-size: 1.05rem;
+                margin: 12px 0;
+                border-radius: 12px;
+            }
+
+            .button-group {
+                gap: 12px;
+                margin-top: 30px;
+            }
+            .button-group button {
+                width: 100%;
+                flex-grow: unset;
+            }
+
+            .modal-content {
+                padding: 2.2rem;
+            }
+            .modal-content button {
+                margin: 0 10px;
+                padding: 14px 22px;
+                font-size: 1.1rem;
+                border-radius: 9999px; /* ยังคงเป็นแคปซูลบนมือถือ */
+            }
+            #closeButton {
+                top: 18px;
+                right: 18px;
+                width: 40px;
+                height: 40px;
+                font-size: 2rem;
+            }
+
+            .answer-item {
+                padding: 20px;
+            }
+            .answer-review h3 {
+                font-size: 1.5rem;
+            }
+            .answer-item .question-text {
+                font-size: 1.1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="w-full max-w-[90vw] sm:max-w-[600px] md:max-w-[794px] p-6 md:p-10 bg-white rounded-2xl shadow-xl">
+    <!-- หน้าล็อกอิน (แสดงเป็นหน้าแรก) -->
+    <div id="loginBox" style="display:block;">
+        <p class="app-title">แบบทดสอบ ภาค ก. ท้องถิ่น กฎหมาย 200 ข้อ</p>
+    
+        <div class="form-group">
+            <input type="text" id="usernameInput" placeholder="ชื่อผู้ใช้"
+            class="w-full text-xl px-6 py-4 rounded-full border border-gray-300 shadow-sm text-center placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-400">
+        </div>
+        <button onclick="attemptLogin()"
+         class="text-xl px-8 py-4 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-white font-semibold shadow-md hover:opacity-90">เข้าสู่ระบบ</button>
+        <div id="loginMessage" class="message" style="display: none;"></div>
+    </div>
+
+    <!-- หน้าโหลด (ซ่อนไว้ตอนเริ่มต้น) -->
+    <div id="loadingBox" class="loading" style="display:none;">
+        <div class="spinner"></div>
+        <p>กำลังโหลดข้อสอบ...</p>
+    </div>
+
+    <!-- หน้าสอบ (ซ่อนไว้ตอนเริ่มต้น) -->
+    <div id="quizBox" class="question-box" style="display:none;">
+        <!-- Close button (X) สำหรับการจบข้อสอบก่อนเวลา -->
+        <button id="closeButton" class="">
+            &times;
+        </button>
+
+        <div class="progress-bar">
+            <div id="progressFill" class="progress-fill" style="width: 0%"></div>
+        </div>
+        
+        <div id="questionCounter" class="question-counter"></div>
+        <h4 id="questionText"></h4>
+        <div id="options"></div>
+        
+        <div class="button-group">
+            <!-- สลับลำดับของปุ่มเพื่อให้ "ย้อนกลับ" อยู่ซ้ายและ "ถัดไป" อยู่ขวา -->
+            <button id="backBtn" onclick="previousQuestion()" 
+             class="text-base px-4 py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-white font-semibold shadow-md hover:opacity-90 sm:text-xl sm:px-8 sm:py-4">ย้อนกลับ</button>
+            <button id="nextBtn" onclick="nextQuestion()"
+             class="text-base px-4 py-2 rounded-full bg-gradient-to-r from-blue-400 to-blue-500 text-white font-semibold shadow-md hover:opacity-90 sm:text-xl sm:px-8 sm:py-4">ถัดไป</button>
+        </div>
+    </div>
+
+    <!-- หน้าผลลัพธ์ (ซ่อนไว้ตอนเริ่มต้น) -->
+    <div id="resultBox" class="result-box" style="display:none;">
+        <h2>ผลลัพธ์การสอบ</h2>
+        <div id="scoreDisplay"></div>
+        <div id="answerReview"></div> 
+        <button onclick="resetQuiz()">ทำใหม่</button> 
+    </div>
+</div>
+
+<!-- Custom Confirmation Modal (โมดอลยืนยัน) -->
+<div id="confirmationModal" class="modal-overlay hidden">
+    <div class="modal-content">
+        <p class="text-xl font-semibold mb-4">ยืนยันการส่งคำตอบ</p>
+        <p class="mb-6">คุณต้องการส่งคำตอบตอนนี้หรือไม่? คุณจะไม่สามารถกลับมาทำข้อสอบต่อได้</p>
+        <div class="flex justify-center space-x-4">
+            <button id="cancelSubmit">ยกเลิก</button>
+            <button id="confirmSubmit">ส่งคำตอบ</button>
+        </div>
+    </div>
+</div>
+
+<script>
+// **สำคัญมาก: ต้องเปลี่ยน URL นี้เป็น URL ที่ได้จากการ Deploy Apps Script ของคุณเสมอ**
+const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbz6Lr_tetTrlB-fLI4P5cza-IV2EXST8O1bn1wfo1fjObNjo_YllxA3042wN7vHf5cl6w/exec';
+// --- ตัวแปรหลัก ---
+let questions = [];
+let currentQuestion = 0;
+let userName = '';
+// จะเก็บ username ที่ผู้ใช้ป้อนและตรวจสอบสำเร็จ
+let displayUserName = ''; // จะเก็บ 'ชื่อ' ที่ดึงมาจาก Sheet (ช่อง D)
+let userAnswers = [];
+// เก็บ index ของตัวเลือกที่ผู้ใช้เลือก
+let startTime;
+
+// --- ฟังก์ชันสำหรับจัดการ UI และการทำงาน ---
+
+// ฟังก์ชันแสดงข้อความแจ้งเตือนบน UI
+function showMessage(text, type = 'error', targetElementId = 'loginMessage') {
+    const messageElement = document.getElementById(targetElementId);
+    if (messageElement) {
+        messageElement.textContent = text;
+        messageElement.className = `message ${type}`;
+        messageElement.style.display = 'block';
+    } else {
+        console.error(`ไม่พบ element เป้าหมายสำหรับข้อความ: ${targetElementId}`);
+    }
+}
+
+// ฟังก์ชันสลับการแสดงผลของหน้าต่างๆ
+function switchView(viewId) {
+    ['loginBox', 'loadingBox', 'quizBox', 'resultBox'].forEach(id => {
+        const element = document.getElementById(id);
+        if (element) {
+            element.style.display = (id === viewId) ? 'block' : 'none';
+        }
+    });
+}
+
+
+// --- Logic การทำงานของแบบทดสอบ ---
+
+// 1. ฟังก์ชันพยายามล็อกอิน
+async function attemptLogin() {
+    const usernameInput = document.getElementById('usernameInput');
+    const enteredUsername = usernameInput.value.trim();
+    // ซ่อนข้อความแจ้งเตือนเก่าทันทีเมื่อมีการพยายามเข้าสู่ระบบใหม่
+    const loginMessageElement = document.getElementById('loginMessage');
+    if (loginMessageElement) {
+        loginMessageElement.style.display = 'none';
+        loginMessageElement.textContent = '';
+    }
+
+    if (!enteredUsername) {
+        showMessage('กรุณากรอกชื่อผู้ใช้', 'error', 'loginMessage');
+        return;
+    }
+    
+    switchView('loadingBox');
+    // แสดงหน้าโหลด
+
+    try {
+        const response = await fetch(`${SCRIPT_URL}?action=checkUser&username=${encodeURIComponent(enteredUsername)}`);
+        if (!response.ok) {
+            throw new Error(`การตอบสนองของเครือข่ายไม่ถูกต้อง: ${response.statusText}`);
+        }
+        const data = await response.json();
+
+        if (data.success && data.valid) {
+            userName = data.username;
+            // เก็บ username จริงที่ใช้ในการตรวจสอบ
+            displayUserName = data.name; // เก็บชื่อที่ใช้แสดงผล (จากช่อง D)
+            startQuiz();
+            // เริ่มโหลดข้อสอบหลังจากล็อกอินสำเร็จ
+        } else {
+            switchView('loginBox'); // กลับไปหน้าล็อกอิน
+            showMessage(data.message || 'ไม่สามารถเข้าสู่ระบบได้', 'error', 'loginMessage');
+        }
+    } catch (error) {
+        console.error('เกิดข้อผิดพลาดระหว่างล็อกอิน:', error);
+        switchView('loginBox'); // กลับไปหน้าล็อกอิน
+        showMessage('เกิดข้อผิดพลาดในการเชื่อมต่อ: ' + error.message, 'error', 'loginMessage');
+    }
+}
+
+// 2. ฟังก์ชันเริ่มโหลดข้อสอบ (ถูกเรียกหลังจากล็อกอินสำเร็จ)
+async function startQuiz() {
+    // ล้างค่าสำหรับเริ่มสอบใหม่
+    questions = [];
+    currentQuestion = 0;
+    userAnswers = [];
+    try {
+        const questionsResponse = await fetch(`${SCRIPT_URL}?action=getQuestions`);
+        if (!questionsResponse.ok) {
+            throw new Error(`การตอบสนองของเครือข่ายไม่ถูกต้อง: ${questionsResponse.statusText}`);
+        }
+        const questionsData = await questionsResponse.json();
+        
+        if (!questionsData.success || !questionsData.data || questionsData.data.length === 0) {
+            throw new Error(questionsData.message || 'ไม่มีข้อสอบในระบบ');
+        }
+        
+        questions = questionsData.data;
+        startTime = new Date(); // เริ่มจับเวลาเมื่อโหลดข้อสอบสำเร็จ
+        
+        // เปลี่ยนไปหน้าข้อสอบ
+        switchView('quizBox');
+        showQuestion();
+    } catch (error) {
+        console.error('เกิดข้อผิดพลาดในการเริ่มทำข้อสอบ:', error);
+        switchView('loginBox'); // กลับไปหน้าล็อกอินเพื่อให้ผู้ใช้เห็นข้อผิดพลาด
+        showMessage(`ข้อผิดพลาด: ${error.message}`, 'error', 'loginMessage');
+    }
+}
+
+// 3. ฟังก์ชันแสดงคำถามปัจจุบัน
+function showQuestion() {
+    if (currentQuestion >= questions.length) {
+        showResult();
+        // หากทำข้อสอบครบทุกข้อแล้ว ให้แสดงผลลัพธ์
+        return;
+    }
+    
+    const question = questions[currentQuestion];
+    const progress = ((currentQuestion) / questions.length) * 100;
+    
+    // อัปเดต UI
+    document.getElementById('progressFill').style.width = `${progress}%`;
+    document.getElementById('questionCounter').textContent = `ข้อที่ ${currentQuestion + 1} จาก ${questions.length}`;
+    document.getElementById('questionText').textContent = question.question;
+    
+    // สร้างตัวเลือก
+    const optionsContainer = document.getElementById('options');
+    optionsContainer.innerHTML = '';
+    question.options.forEach((option, index) => {
+        if (typeof option === 'string' && option.trim() !== '') {
+            const optionDiv = document.createElement('div');
+            optionDiv.className = 'option';
+            optionDiv.textContent = option;
+            optionDiv.onclick = () => selectOption(index, optionDiv);
+            optionsContainer.appendChild(optionDiv);
+
+            // กู้คืนสถานะตัวเลือกที่เลือกไว้หากผู้ใช้ย้อนกลับมาที่คำถามนี้
+            if (userAnswers[currentQuestion] === index) {
+                optionDiv.classList.add('selected');
+            }
+        }
+    });
+    // อัปเดตข้อความและสถานะของปุ่ม "ถัดไป" และ "ย้อนกลับ"
+    const nextBtn = document.getElementById('nextBtn');
+    const backBtn = document.getElementById('backBtn');
+    nextBtn.textContent = currentQuestion === questions.length - 1 ? 'จบการสอบ' : 'ถัดไป';
+    backBtn.disabled = currentQuestion === 0;
+}
+
+function selectOption(index, element) {
+    // ลบคลาส 'selected' ออกจากตัวเลือกทั้งหมดในคำถามปัจจุบัน
+    const options = element.parentElement.querySelectorAll('.option');
+    options.forEach(opt => opt.classList.remove('selected'));
+    
+    // เพิ่มคลาส 'selected' ให้กับตัวเลือกที่คลิก
+    element.classList.add('selected');
+    userAnswers[currentQuestion] = index;
+}
+
+function nextQuestion() {
+    if (userAnswers[currentQuestion] === undefined) {
+        showMessage('กรุณาเลือกคำตอบก่อนดำเนินการต่อ', 'error', 'questionCounter'); // ใช้ showMessage แทน alert
+        return;
+    }
+    
+    currentQuestion++;
+    showQuestion();
+}
+
+function previousQuestion() {
+    if (currentQuestion > 0) {
+        currentQuestion--;
+        showQuestion();
+    }
+}
+
+// 4. ฟังก์ชันแสดงผลลัพธ์ (โดยไม่มีการบันทึก)
+async function showResult() {
+    switchView('resultBox');
+    
+    const endTime = new Date();
+    const timeSpent = Math.floor((endTime - startTime) / 1000);
+    let correctCount = 0;
+    for (let i = 0; i < questions.length; i++) {
+        if (userAnswers[i] !== undefined && questions[i] && questions[i].correct !== undefined && userAnswers[i] === questions[i].correct) {
+            correctCount++;
+        }
+    }
+    const percentage = (questions.length > 0) ? (correctCount / questions.length) * 100 : 0;
+    
+    // แสดงผล ชื่อผู้ใช้, คะแนน, เปอร์เซ็นต์
+    document.getElementById('scoreDisplay').innerHTML = `
+        <div class="message success">
+            <h3>ผลสอบของคุณ</h3>
+            <p><strong>ชื่อผู้ใช้:</strong> ${displayUserName || userName}</p>
+            <p><strong>ตอบถูก:</strong> ${correctCount} ข้อ จากทั้งหมด ${questions.length} ข้อ</p>
+            <p><strong>คะแนน:</strong> ${percentage.toFixed(1)}%</p>
+            <p>ใช้เวลา ${Math.floor(timeSpent / 60)} นาที ${timeSpent % 60} วินาที</p>
+        </div>
+    `;
+    // แสดงเฉลย
+    const answerReviewContainer = document.getElementById('answerReview');
+    answerReviewContainer.innerHTML = '<h3 class="answer-review">เฉลยและคำอธิบาย</h3>';
+    questions.forEach((question, index) => {
+        const userAnswerIndex = userAnswers[index];
+        const userAnswerText = userAnswerIndex !== undefined && question.options[userAnswerIndex] !== undefined ? question.options[userAnswerIndex] : 'ไม่ได้ตอบ';
+        const correctAnswerText = question.options[question.correct] !== undefined ? question.options[question.correct] : 'ไม่ทราบ';
+        const isCorrect = userAnswerIndex === question.correct;
+
+        const answerItemDiv = document.createElement('div');
+        answerItemDiv.className = `answer-item ${isCorrect ? 'correct-border' : 'incorrect-border'}`;
+        
+        answerItemDiv.innerHTML = `
+            <p class="question-text">ข้อ ${index + 1}: ${question.question}</p>
+            <p>คำตอบของคุณ: <span class="user-answer ${isCorrect ? 'correct' : ''}">${userAnswerText}</span></p>
+            <p>คำตอบที่ถูกต้อง: <span class="correct-answer">${correctAnswerText}</span></p>
+            ${question.explanation ? `<p class="explanation">คำอธิบาย: ${question.explanation}</p>` : ''}
+        `;
+        answerReviewContainer.appendChild(answerItemDiv);
+    });
+
+    // *** ส่วนของการบันทึกผลสอบถูกลบออกแล้ว ***
+    console.log("การบันทึกผลสอบถูกปิดการใช้งาน");
+}
+
+// Function to handle early quiz submission (ฟังก์ชันสำหรับจัดการการส่งข้อสอบก่อนเวลา)
+function submitQuizEarly() {
+    console.log("พยายามส่งข้อสอบก่อนเวลา...");
+    // เรียก showResult โดยตรงเพื่อคำนวณคะแนน แสดงผลลัพธ์
+    showResult();
+}
+
+
+// 5. ฟังก์ชันรีเซ็ตกลับไปหน้าล็อกอิน
+function resetQuiz() {
+    // รีเซ็ตตัวแปรสถานะ
+    questions = [];
+    currentQuestion = 0;
+    userName = '';
+    displayUserName = '';
+    userAnswers = [];
+    startTime = null; 
+
+    // เคลียร์ค่า input และข้อความ
+    const usernameInput = document.getElementById('usernameInput');
+    if(usernameInput) usernameInput.value = '';
+    const loginMessageElement = document.getElementById('loginMessage');
+    if (loginMessageElement) {
+        loginMessageElement.style.display = 'none';
+        loginMessageElement.textContent = '';
+    }
+    
+    // กลับไปหน้าล็อกอิน
+    switchView('loginBox');
+}
+
+// Event Listeners สำหรับปุ่มปิดและโมดอลใหม่
+const closeButton = document.getElementById('closeButton');
+const confirmationModal = document.getElementById('confirmationModal');
+const confirmSubmitButton = document.getElementById('confirmSubmit');
+const cancelSubmitButton = document.getElementById('cancelSubmit');
+// ฟังก์ชันสำหรับแสดงโมดอลยืนยัน
+function showConfirmationModal() {
+    confirmationModal.classList.remove('hidden');
+}
+
+// ฟังก์ชันสำหรับซ่อนโมดอลยืนยัน
+function hideConfirmationModal() {
+    confirmationModal.classList.add('hidden');
+}
+
+// Event listener สำหรับปุ่มปิด (X)
+closeButton.addEventListener('click', showConfirmationModal);
+// Event listener สำหรับปุ่ม "ส่งคำตอบ" ในโมดอล
+confirmSubmitButton.addEventListener('click', () => {
+    hideConfirmationModal();
+    submitQuizEarly(); // เรียกฟังก์ชันเพื่อส่งผลการสอบ
+});
+// Event listener สำหรับปุ่ม "ยกเลิก" ในโมดอล
+cancelSubmitButton.addEventListener('click', hideConfirmationModal);
+// Event Listener: เริ่มต้นการทำงานเมื่อหน้าเว็บโหลดเสร็จ
+document.addEventListener('DOMContentLoaded', function() {
+    // เริ่มต้นโดยการแสดงหน้าล็อกอินเท่านั้น
+    switchView('loginBox');
+});
+</script>
+</body>
+</html>
